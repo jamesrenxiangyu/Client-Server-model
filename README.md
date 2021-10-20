@@ -1,5 +1,6 @@
 # Client-Server-model
-use mininet to emulate C-S model
+use mininet to emulate the Client-Server model
+
 Original repository: https://github.com/Houmaneskandani/facebook_topo_python
 
 Mininet Documentation:
