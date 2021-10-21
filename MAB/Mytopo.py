@@ -9,18 +9,21 @@ from mininet.cli import CLI
 
 import sys
 
-def linkUpdate(n1, n2, link, totalTime, currentTime, currentLoss, lossStep, serverIp, port, targetLoss, numPacket):
+def linkUpdate(net, n1, n2, link, totalTime, currentTime, currentLoss, lossStep, serverIp, port, targetLoss, numPacket):
     i = 0
     info("*** Update Link Param\n")
+    CLI(net, script = 'clientScript.txt')
+    CLI(net, script = 'serverScript.txt')
     while True:
         # n2.cmd('python3 sender.py %s %s %s %s', (serverIp, port, targetLoss, numPacket))
         if currentTime > totalTime:
             break;
-        if time.time() - currentTime > i+5:
+        if time.time() - currentTime > i+10:
             info("\n*** Link Update")
             link.delete()
-            link.__init__(n1, n2, cls = TCLink, bw = 100, delay = 10, loss = currentLoss+i*lossStep)
-            i += 5
+            currentLoss += lossStep
+            link.__init__(n1, n2, cls = TCLink, bw = 100, delay = 10, loss = currentLoss)
+            i += 10
 
 def topology():
     info("Create a network.")
@@ -54,10 +57,10 @@ def topology():
     net.build()
 
     info("*** Enable Client-Socket model\n")  
-    rightHost.cmd('python3 receiver.py')
-    print("*** Receiver started ...")
+    # rightHost.cmd('python3 receiver.py')
+    # print("*** Receiver started ...")
 
-    linkUpdate(leftHost, rightHost, l1, totalTime, currentTime, currentLoss, lossStep, serverIp, port, targetLoss, numPacket)	
+    # linkUpdate(net, leftHost, rightHost, l1, totalTime, currentTime, currentLoss, lossStep, serverIp, port, targetLoss, numPacket)	
    
     # kills all the xterms that have been opened
     # os.system('pkill xterm')

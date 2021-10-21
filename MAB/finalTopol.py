@@ -48,7 +48,7 @@ class MyTopo( Topo ):
         print("Create custom topo.")
         totalTime = time.time() + 100  # total time = 100 seconds
         currentTime = time.time()
-        currentLoss = 0
+        currentLoss = 5
         lossStep = 2
 
         # Initialize topology
