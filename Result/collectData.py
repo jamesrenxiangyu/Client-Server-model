@@ -10,8 +10,10 @@ import numpy as np
 from scapy.all import *
 import matplotlib.pyplot as plt
 
-pkts1 = rdpcap("mab_random_loss.cap")
-pkts2 = rdpcap("no_mab_random_loss.cap")
+# pkts1 = rdpcap("mab_random_loss.cap")
+# pkts2 = rdpcap("no_mab_random_loss.cap")
+pkts1 = rdpcap("full_reliability.cap")
+pkts2 = rdpcap("mab_reliability.cap")
 
 
 def drawACKCurve(time1, ack1, label1, time2, ack2, label2):
@@ -21,6 +23,7 @@ def drawACKCurve(time1, ack1, label1, time2, ack2, label2):
     plt.ylabel('ACK sequence number')
     plt.title('Packet reception time comparison')
     plt.legend()
+    plt.show()
     
     
 
@@ -29,6 +32,7 @@ def drawBoxplot(delay, label):
     plt.ylabel('Delay (s)')
     # plt.xlabel(label)
     plt.title('Per-packet delay Comparison')
+    plt.show()
 
 # def timeACK(ackID, ackTime):
 #     ackTime = ackTime - ackTime[0]
@@ -70,7 +74,7 @@ def collectData(trace):
         k += 1
     ackTime = np.array(serverTime)
     sendTime = np.array(newTime)
-    ackTime = ackTime - ackTime[0]
+    ackTime = ackTime - sendTime[0]
     sendTime = sendTime - sendTime[0]
     pktDelay = ackTime - sendTime
     sendID = test1
@@ -82,6 +86,8 @@ def collectData(trace):
 [ackTime1, sendTime1, pktDelay1, sendID1, ackID1] = collectData(pkts1)
 [ackTime2, sendTime2, pktDelay2, sendID2, ackID2]  = collectData(pkts2)
 Delay = [pktDelay1, pktDelay2]
+# print(sendTime1[0:10],'\n************\n')
+# print(ackTime1[0:10],'\n************\n')
 
 
 # Filter out outstanding data
@@ -89,11 +95,11 @@ fil_delay1 = pktDelay1[pktDelay1<0.15]
 fil_delay2 = pktDelay2[pktDelay2<0.15]
 fil_Delay = [fil_delay1, fil_delay2]
 
-# # Boxplot
-# plt.figure(1)
-# drawBoxplot(Delay, ['with MAB', 'without MAB'])
-# plt.figure(2)
-# drawBoxplot(fil_Delay, ['with MAB', 'without MAB'])
+# Boxplot
+plt.figure(1)
+drawBoxplot(Delay, ['with MAB', 'without MAB'])
+plt.figure(2)
+drawBoxplot(fil_Delay, ['with MAB', 'without MAB'])
 
 # ACK-time curve
 t = np.minimum(len(ackID1), len(ackID2))
