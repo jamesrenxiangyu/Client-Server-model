@@ -10,10 +10,10 @@ import numpy as np
 from scapy.all import *
 import matplotlib.pyplot as plt
 
-# pkts1 = rdpcap("mab_random_loss.cap")
-# pkts2 = rdpcap("no_mab_random_loss.cap")
-pkts1 = rdpcap("full_reliability.cap")
-pkts2 = rdpcap("mab_reliability.cap")
+pkts1 = rdpcap("mab_random_loss.cap")
+pkts2 = rdpcap("no_mab_random_loss.cap")
+# pkts1 = rdpcap("full_reliability.cap")
+# pkts2 = rdpcap("mab_reliability.cap")
 
 
 def drawACKCurve(time1, ack1, label1, time2, ack2, label2):
