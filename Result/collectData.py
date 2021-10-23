@@ -12,8 +12,8 @@ import matplotlib.pyplot as plt
 
 # pkts1 = rdpcap("mab_random_loss.cap")
 # pkts2 = rdpcap("no_mab_random_loss.cap")
-pkts1 = rdpcap("full_reliability.cap")
-pkts2 = rdpcap("mab_reliability.cap")
+pkts1 = rdpcap("NewData/mab_fixed_loss.cap")
+pkts2 = rdpcap("NewData/mab_random_loss.cap")
 
 
 def drawACKCurve(time1, ack1, label1, time2, ack2, label2):
